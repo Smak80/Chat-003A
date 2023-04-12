@@ -6,12 +6,12 @@ import java.net.ServerSocket;
 public class Server {
     private int port;
     private boolean stop;
+    ServerSocket ss;
     public Server(int port){
         this.port = port;
     }
 
     public void start(){
-        ServerSocket ss;
         try {
             ss = new ServerSocket(port);
             stop = false;
@@ -25,7 +25,6 @@ public class Server {
                     }
                 }
             }).start();
-            ss.close();
         } catch (IOException e) {
             System.out.println("Ошибка: "+e.getMessage());
         }
@@ -33,5 +32,10 @@ public class Server {
 
     public void stop(){
         stop = true;
+        try {
+            ss.close();
+        } catch (IOException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
     }
 }
